@@ -1,6 +1,8 @@
 # RealDealApi
 Following the tutorial from [Elixir API: Password Authentication](https://www.youtube.com/watch?v=LGY_eILc8Ks&list=PL2Rv8vpZJz4zM3Go3X-dda478p-6xrmEl)
 
+Same in blog format: [Elixir API: Password Authentication Blog](https://medium.com/@arnoldchris262/how-to-build-scalable-production-ready-apis-in-phoenix-elixir-part-1-bdc5d7981d83)
+
 ## CLI commands
 
 ### Create a new Phoenix API project:
@@ -17,6 +19,12 @@ cd real_deal_api
 ### Configure your database
 
 Goto [config/dev.exs](./config/dev.exs) and configure your database.
+
+### Add .elixir_ls/ to .gitignore
+
+```
+echo ".elixir_ls/" >> .gitignore
+```
 
 ### Install & setup dependencies:
 
@@ -58,6 +66,18 @@ mix deps.get
 
 ```
 mix test.watch
+```
+
+### Remove .elixir_ls directory tracking in git:
+
+```
+git rm -r --cached .elixir_ls
+```
+
+### Create Account Context, Schema, and Migration:
+
+```
+mix phx.gen.json Accounts Account accounts email:string hashed_password:string
 ```
 
 ---

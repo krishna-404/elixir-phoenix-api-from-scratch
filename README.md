@@ -88,6 +88,12 @@ mix phx.gen.json Accounts Account accounts email:string hashed_password:string
 mix phx.gen.json Users User users account_id:references:accounts full_name:string gender:string biography:text
 ```
 
+### Run migrations:
+
+```
+mix ecto.migrate
+```
+
 ---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 

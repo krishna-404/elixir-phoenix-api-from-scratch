@@ -33,8 +33,10 @@ defmodule RealDealApi.MixProject do
   defp deps do
     [
       {:bandit, "~> 1.5"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:dns_cluster, "~> 0.1.1"},
       {:ecto_sql, "~> 3.10"},
+      {:guardian, "~> 2.3"},
       {:jason, "~> 1.2"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:phoenix, "~> 1.7.14"},

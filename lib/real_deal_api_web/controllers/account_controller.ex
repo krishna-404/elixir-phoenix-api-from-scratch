@@ -2,7 +2,7 @@ defmodule RealDealApiWeb.AccountController do
   use RealDealApiWeb, :controller
 
   alias RealDealApi.{Accounts, Accounts.Account, Users, Users.User}
-  alias RealDealApiWeb.Auth.Guardian
+  alias RealDealApiWeb.Auth.{ErrorResponse.Unauthorised, Guardian}
 
   action_fallback RealDealApiWeb.FallbackController
 
@@ -18,6 +18,17 @@ defmodule RealDealApiWeb.AccountController do
       conn
       |> put_status(:created)
       |> render(:account_token, account: account, token: token)
+    end
+  end
+
+  def sign_in(conn, %{"email" => email, "password" => password}) do
+    case Guardian.authenticate(email, password) do
+      {:ok, account, token} ->
+        conn
+        |> put_status(:ok)
+        |> render(:account_token, %{account: account, token: token})
+
+      {:error, :unauthorised} -> raise Unauthorised, message: "Invalid email or password"
     end
   end
 

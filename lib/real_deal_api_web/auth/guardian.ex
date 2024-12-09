@@ -24,11 +24,11 @@ defmodule RealDealApiWeb.Auth.Guardian do
 
   def authenticate(email, password) do
     case Accounts.get_account_by_email(email) do
-      nil -> {:error, :unuathorised}
+      nil -> {:error, :unauthorised}
       account ->
         case verify_password(password, account.hashed_password) do
           true -> create_token(account)
-          false -> {:error, :unuathorised}
+          false -> {:error, :unauthorised}
         end
     end
   end

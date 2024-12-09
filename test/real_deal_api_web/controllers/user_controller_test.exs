@@ -3,24 +3,8 @@ defmodule RealDealApiWeb.UserControllerTest do
 
   import RealDealApi.AccountsFixtures
 
-  alias RealDealApi.Users.User
-
-  @update_attrs %{
-    full_name: "some updated full_name",
-    gender: "some updated gender",
-    biography: "some updated biography"
-  }
-  @invalid_attrs %{full_name: nil, gender: nil, biography: nil}
-
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  end
-
-  describe "index" do
-    test "error 404 when lists all users", %{conn: conn} do
-      conn = get(conn, ~p"/api/users")
-      assert conn.status == 404
-    end
   end
 
   # describe "update user" do

@@ -73,6 +73,34 @@ defmodule RealDealApiWeb.AccountControllerTest do
     end
   end
 
+  describe "sign in" do
+    setup [:create_account]
+
+    test "renders account when data is valid", %{conn: conn} do
+      conn = post(conn, ~p"/api/accounts/sign_in", %{
+        email: "some_email@example.com",
+        password: "some_hashed_password"
+      })
+
+
+      assert %{
+        "id" => _,
+        "email" => "some_email@example.com",
+        "token" => _
+      } =json_response(conn, 200)
+    end
+
+    test "renders errors when data is invalid", %{conn: conn} do
+      conn = post(conn, ~p"/api/accounts/sign_in", %{
+        email: "some_email@example.com",
+        password: "some_wrong_password"
+      })
+      IO.inspect(conn)
+
+      assert %{"error" => "Invalid email or password"} = json_response(conn, 401)
+    end
+  end
+
   describe "delete account" do
     setup [:create_account]
 

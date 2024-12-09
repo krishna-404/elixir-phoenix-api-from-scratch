@@ -3,6 +3,8 @@ Following the tutorial from [Elixir API: Password Authentication](https://www.yo
 
 Same in blog format: [Elixir API: Password Authentication Blog](https://medium.com/@arnoldchris262/how-to-build-scalable-production-ready-apis-in-phoenix-elixir-part-1-bdc5d7981d83)
 
+Also taking inspiration from [Elixir API from scratch](https://intercaetera.com/posts/elixir-api-from-scratch/)
+
 ## CLI commands
 
 ### Create a new Phoenix API project:

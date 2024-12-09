@@ -36,7 +36,8 @@ defmodule RealDealApiWeb.AccountControllerTest do
       assert %{
                "id" => ^id,
                "email" => "some email",
-               "hashed_password" => "some hashed_password"
+               "inserted_at" => _,
+               "updated_at" => _
              } = json_response(conn, 200)
     end
 
@@ -58,7 +59,8 @@ defmodule RealDealApiWeb.AccountControllerTest do
       assert %{
                "id" => ^id,
                "email" => "some updated email",
-               "hashed_password" => "some updated hashed_password"
+               "inserted_at" => _,
+               "updated_at" => _
              } = json_response(conn, 200)
     end
 

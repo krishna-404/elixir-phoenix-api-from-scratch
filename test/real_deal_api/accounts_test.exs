@@ -21,11 +21,11 @@ defmodule RealDealApi.AccountsTest do
     end
 
     test "create_account/1 with valid data creates a account" do
-      valid_attrs = %{email: "some email", hashed_password: "some hashed_password"}
+      valid_attrs = %{email: "some_email@example.com", hashed_password: "some_hashed_password"}
 
       assert {:ok, %Account{} = account} = Accounts.create_account(valid_attrs)
-      assert account.email == "some email"
-      assert account.hashed_password == "some hashed_password"
+      assert account.email == "some_email@example.com"
+      assert String.length(account.hashed_password) > 0
     end
 
     test "create_account/1 with invalid data returns error changeset" do
@@ -34,11 +34,11 @@ defmodule RealDealApi.AccountsTest do
 
     test "update_account/2 with valid data updates the account" do
       account = account_fixture()
-      update_attrs = %{email: "some updated email", hashed_password: "some updated hashed_password"}
+      update_attrs = %{email: "update_email@example.com", hashed_password: "update_hashed_password"}
 
       assert {:ok, %Account{} = account} = Accounts.update_account(account, update_attrs)
-      assert account.email == "some updated email"
-      assert account.hashed_password == "some updated hashed_password"
+      assert account.email == "update_email@example.com"
+      assert String.length(account.hashed_password) > 0
     end
 
     test "update_account/2 with invalid data returns error changeset" do

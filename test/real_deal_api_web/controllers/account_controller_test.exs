@@ -6,12 +6,15 @@ defmodule RealDealApiWeb.AccountControllerTest do
   alias RealDealApi.Accounts.Account
 
   @create_attrs %{
-    email: "some email",
-    hashed_password: "some hashed_password"
+    email: "some_email@example.com",
+    hashed_password: "some_hashed_password",
+    full_name: "some full_name",
+    gender: "male",
+    biography: "some biography"
   }
   @update_attrs %{
-    email: "some updated email",
-    hashed_password: "some updated hashed_password"
+    email: "some_update_email@example.com",
+    hashed_password: "some_update_hashed_password"
   }
   @invalid_attrs %{email: nil, hashed_password: nil}
 
@@ -35,7 +38,7 @@ defmodule RealDealApiWeb.AccountControllerTest do
 
       assert %{
                "id" => ^id,
-               "email" => "some email",
+               "email" => "some_email@example.com",
                "inserted_at" => _,
                "updated_at" => _
              } = json_response(conn, 200)
@@ -58,7 +61,7 @@ defmodule RealDealApiWeb.AccountControllerTest do
 
       assert %{
                "id" => ^id,
-               "email" => "some updated email",
+               "email" => "some_update_email@example.com",
                "inserted_at" => _,
                "updated_at" => _
              } = json_response(conn, 200)

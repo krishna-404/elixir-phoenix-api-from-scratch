@@ -11,8 +11,11 @@ defmodule RealDealApi.AccountsFixtures do
     {:ok, account} =
       attrs
       |> Enum.into(%{
-        email: "some email",
-        hashed_password: "some hashed_password"
+        email: "some_email@example.com",
+        hashed_password: "some hashed_password",
+        full_name: "some full_name",
+        gender: "male",
+        biography: "some biography"
       })
       |> RealDealApi.Accounts.create_account()
 

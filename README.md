@@ -8,7 +8,26 @@
 mix phx.new real_deal_api --app real_deal_api --database postgres --no-live --no-assets --no-html --no-dashboard --no-mailer --binary-id --no-esbuild --no-gettext --no-tailwind
 ```
 
-To start your Phoenix server:
+### Go to project folder:
+
+```
+cd real_deal_api
+```
+### Configure your database
+
+Goto (config/dev.exs)[./config/dev.exs] and configure your database.
+
+### Install & setup dependencies:
+
+Can also use `mix deps.get` to install dependencies
+
+```
+mix setup
+```
+
+### 
+
+### Start Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`

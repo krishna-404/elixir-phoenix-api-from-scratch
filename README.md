@@ -25,7 +25,11 @@ Can also use `mix deps.get` to install dependencies
 mix setup
 ```
 
-### 
+### Create database:
+
+```
+mix ecto.create
+```
 
 ### Start Phoenix server:
 

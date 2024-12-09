@@ -82,6 +82,12 @@ git rm -r --cached .elixir_ls
 mix phx.gen.json Accounts Account accounts email:string hashed_password:string
 ```
 
+### Create User Context, Schema, and Migration:
+
+```
+mix phx.gen.json Users User users account_id:references:accounts full_name:string gender:string biography:text
+```
+
 ---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 

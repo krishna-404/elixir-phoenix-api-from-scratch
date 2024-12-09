@@ -10,5 +10,6 @@ defmodule RealDealApiWeb.Router do
 
     get "/", DefaultController, :index
     resources "/accounts", AccountController
+    resources "/users", UserController
   end
 end

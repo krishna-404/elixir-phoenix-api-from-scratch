@@ -25,3 +25,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 real_deal_api-*.tar
 
+# local language server cache directory created by the Elixir Language Server for your editor.
+.elixir_ls/

@@ -48,6 +48,18 @@ mix test
 ```
 There will be 3 tests all should pass.
 
+### Install mix_test_watch dependency:
+
+```
+mix deps.get
+```
+
+### Run tests and watch for changes:
+
+```
+mix test.watch
+```
+
 ---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 

@@ -10,6 +10,7 @@
                         'Elixir.RealDealApi.DataCase',
                         'Elixir.RealDealApi.Repo','Elixir.RealDealApiWeb',
                         'Elixir.RealDealApiWeb.ConnCase',
+                        'Elixir.RealDealApiWeb.DefaultController',
                         'Elixir.RealDealApiWeb.Endpoint',
                         'Elixir.RealDealApiWeb.ErrorJSON',
                         'Elixir.RealDealApiWeb.Router',

@@ -1,4 +1,5 @@
 # RealDealApi
+Following the tutorial from [Elixir API: Password Authentication](https://www.youtube.com/watch?v=LGY_eILc8Ks&list=PL2Rv8vpZJz4zM3Go3X-dda478p-6xrmEl)
 
 ## CLI commands
 
@@ -15,7 +16,7 @@ cd real_deal_api
 ```
 ### Configure your database
 
-Goto (config/dev.exs)[./config/dev.exs] and configure your database.
+Goto [config/dev.exs](./config/dev.exs) and configure your database.
 
 ### Install & setup dependencies:
 
@@ -33,11 +34,15 @@ mix ecto.create
 
 ### Start Phoenix server:
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+```
+mix phx.server
+```
+You can also start inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can visit [`localhost:4000/api`](http://localhost:4000/api) from your browser.
 
+
+---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Learn more

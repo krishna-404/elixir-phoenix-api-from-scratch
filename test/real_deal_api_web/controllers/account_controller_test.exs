@@ -22,14 +22,14 @@ defmodule RealDealApiWeb.AccountControllerTest do
   describe "index" do
     test "lists all accounts", %{conn: conn} do
       conn = get(conn, ~p"/api/accounts")
-      assert json_response(conn, 200)["data"] == []
+      assert json_response(conn, 200) == []
     end
   end
 
   describe "create account" do
     test "renders account when data is valid", %{conn: conn} do
       conn = post(conn, ~p"/api/accounts", account: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      assert %{"id" => id} = json_response(conn, 201)
 
       conn = get(conn, ~p"/api/accounts/#{id}")
 
@@ -37,7 +37,7 @@ defmodule RealDealApiWeb.AccountControllerTest do
                "id" => ^id,
                "email" => "some email",
                "hashed_password" => "some hashed_password"
-             } = json_response(conn, 200)["data"]
+             } = json_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -51,7 +51,7 @@ defmodule RealDealApiWeb.AccountControllerTest do
 
     test "renders account when data is valid", %{conn: conn, account: %Account{id: id} = account} do
       conn = put(conn, ~p"/api/accounts/#{account}", account: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert %{"id" => ^id} = json_response(conn, 200)
 
       conn = get(conn, ~p"/api/accounts/#{id}")
 
@@ -59,7 +59,7 @@ defmodule RealDealApiWeb.AccountControllerTest do
                "id" => ^id,
                "email" => "some updated email",
                "hashed_password" => "some updated hashed_password"
-             } = json_response(conn, 200)["data"]
+             } = json_response(conn, 200)
     end
 
     test "renders errors when data is invalid", %{conn: conn, account: account} do

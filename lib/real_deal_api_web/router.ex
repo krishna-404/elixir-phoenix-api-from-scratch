@@ -9,5 +9,6 @@ defmodule RealDealApiWeb.Router do
     pipe_through :api
 
     get "/", DefaultController, :index
+    resources "/accounts", AccountController
   end
 end

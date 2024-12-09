@@ -41,6 +41,12 @@ You can also start inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000/api`](http://localhost:4000/api) from your browser.
 
+### Run tests:
+
+```
+mix test
+```
+There will be 3 tests all should pass.
 
 ---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).

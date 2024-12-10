@@ -103,6 +103,12 @@ mix guardian.db.gen.migration
 mix ecto.migrate
 ```
 
+### If during tests you get an error about the database acting funny:
+
+```
+MIX_ENV=test mix ecto.reset
+```
+
 ---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 

@@ -2,6 +2,11 @@ defmodule RealDealApi.Schema.AccountTest do
   use RealDealApi.DataCase
   use RealDealApi.Support.SchemaCase
   alias RealDealApi.Accounts.Account
+  alias Ecto.Changeset
+
+  setup do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(RealDealApi.Repo)
+  end
 
   @expected_fields_with_types [
     {:id, :binary_id},
@@ -49,10 +54,30 @@ defmodule RealDealApi.Schema.AccountTest do
       assert "can't be blank" in errors_on(changeset).hashed_password
     end
 
-    test "email is not a valid email" do
+    test "error: email is not a valid email" do
       changeset = Account.changeset(%Account{}, %{"email" => "invalid-email", "hashed_password" => "password"})
       refute changeset.valid?
       assert "must be a valid email address" in errors_on(changeset).email
+    end
+
+    test "error: email address is reused" do
+      # This allows to start database in an empty state.
+      # Ecto.Adapters.SQL.Sandbox.checkout(RealDealApi.Repo)
+
+      {:ok, existing_account} =
+        %Account{}
+        |> Account.changeset(%{email: "test@test.com", hashed_password: "password"})
+        |> RealDealApi.Repo.insert()
+
+      changeset = Account.changeset(%Account{}, %{"email" => "test@test.com", "hashed_password" => "password"})
+
+      assert {:error, %Changeset{valid?: false, errors: errors}} = RealDealApi.Repo.insert(changeset)
+
+      assert errors[:email], "The field email is missing from errors."
+
+      {_, meta} = errors[:email]
+
+      assert meta[:constraint] == :unique, "The validation type, #{meta[:validation]}, is incorrect"
     end
   end
 end

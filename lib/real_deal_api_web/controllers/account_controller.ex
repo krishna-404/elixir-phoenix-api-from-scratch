@@ -42,11 +42,18 @@ defmodule RealDealApiWeb.AccountController do
     render(conn, :show, account: account)
   end
 
-  def update(conn, %{"account" => account_params}) do
-    account = Accounts.get_account!(account_params["id"])
+  def current_account(conn, %{}) do
+    conn
+    |> put_status(:ok)
+    |> render(:show, account: conn.assigns.account)
+  end
 
-    with {:ok, %Account{} = account} <- Accounts.update_account(account, account_params) do
-      render(conn, :show, account: account)
+  def update(conn, %{"current_password" => current_password, "account" => account_params}) do
+    case Guardian.verify_password(current_password, conn.assigns.account.hashed_password) do
+      true ->
+        {:ok, account} = Accounts.update_account(conn.assigns.account, account_params)
+        render(conn, :show, account: account)
+      false -> raise Unauthorised, message: "Invalid current password"
     end
   end
 

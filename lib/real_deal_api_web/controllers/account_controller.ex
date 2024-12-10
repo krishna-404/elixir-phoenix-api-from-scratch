@@ -2,7 +2,7 @@ defmodule RealDealApiWeb.AccountController do
   use RealDealApiWeb, :controller
 
   alias RealDealApi.{Accounts, Accounts.Account, Users, Users.User}
-  alias RealDealApiWeb.Auth.{ErrorResponse.Forbidden, ErrorResponse.Unauthorised, Guardian}
+  alias RealDealApiWeb.Auth.{ErrorResponse.Forbidden, ErrorResponse.Notfound, ErrorResponse.Unauthorised, Guardian}
 
   plug :is_authorised_account when action in [:show, :update, :delete]
 
@@ -59,6 +59,22 @@ defmodule RealDealApiWeb.AccountController do
 
     with {:ok, %Account{}} <- Accounts.delete_account(account) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def refresh_session(conn, _opts) do
+    old_token = Guardian.get_token(conn)
+    case Guardian.decode_and_verify(old_token) do
+      {:ok, claims} ->
+        case Guardian.resource_from_claims(claims) do
+          {:ok, account} ->
+            {:ok, {_old_token, _old_claims}, {new_token, _new_claims}} = Guardian.refresh(old_token, [])
+            conn |> Plug.Conn.put_session(:account_id, account.id) |> put_status(:ok) |> render(:account_token, %{account: account, token: new_token})
+          {:error, _reason} ->
+            raise Notfound
+        end
+      {:error, _reason} ->
+        raise Notfound
     end
   end
 

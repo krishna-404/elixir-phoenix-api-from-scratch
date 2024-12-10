@@ -1,5 +1,6 @@
 defmodule RealDealApi.Schema.AccountTest do
   use RealDealApi.DataCase
+  use RealDealApi.Support.SchemaCase
   alias RealDealApi.Accounts.Account
 
   @expected_fields_with_types [
@@ -24,22 +25,19 @@ defmodule RealDealApi.Schema.AccountTest do
 
   describe "changeset/2" do
     test "success: returns a valid changeset when given valid attributes" do
-      valid_params = %{
-        "email" => "test@test.com",
-        "hashed_password" => "password",
-      }
+      valid_values = valid_params([{:email, :string}, {:hashed_password, :string}])
 
-      changeset = Account.changeset(%Account{}, valid_params)
+      changeset = Account.changeset(%Account{}, valid_values)
       assert %Ecto.Changeset{valid?: true, changes: changes} = changeset
 
       mutated = [:hashed_password]
       for {field, _} <- @expected_fields_with_types, field not in mutated do
         actual = Map.get(changes, field)
-        expected = valid_params[Atom.to_string(field)]
+        expected = valid_values[Atom.to_string(field)]
         assert actual == expected, "Values for #{field} do not match\nActual: #{inspect(actual)}\nExpected: #{inspect(expected)}"
       end
 
-      assert Bcrypt.verify_pass(valid_params["hashed_password"], changes.hashed_password), "Password: #{inspect(valid_params["hashed_password"])} does not match\n hash: #{inspect(changes.hashed_password)}"
+      assert Bcrypt.verify_pass(valid_values["hashed_password"], changes.hashed_password), "Password: #{inspect(valid_values["hashed_password"])} does not match\n hash: #{inspect(changes.hashed_password)}"
     end
   end
 

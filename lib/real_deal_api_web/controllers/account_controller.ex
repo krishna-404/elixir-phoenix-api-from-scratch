@@ -21,15 +21,16 @@ defmodule RealDealApiWeb.AccountController do
 
   def create(conn, %{"account" => account_params}) do
     with {:ok, %Account{} = account} <- Accounts.create_account(account_params),
-      {:ok, token, _claims} <- Guardian.encode_and_sign(account),
       {:ok, %User{} = _user} <- Users.create_user(account, account_params) do
-      conn
-      |> put_status(:created)
-      |> render(:account_token, account: account, token: token)
+      authorise_account(conn, account.email, account_params["hashed_password"])
     end
   end
 
   def sign_in(conn, %{"email" => email, "password" => password}) do
+    authorise_account(conn, email, password)
+  end
+
+  defp authorise_account(conn, email, password) do
     case Guardian.authenticate(email, password) do
       {:ok, account, token} ->
         conn
@@ -63,19 +64,9 @@ defmodule RealDealApiWeb.AccountController do
   end
 
   def refresh_session(conn, _opts) do
-    old_token = Guardian.get_token(conn)
-    case Guardian.decode_and_verify(old_token) do
-      {:ok, claims} ->
-        case Guardian.resource_from_claims(claims) do
-          {:ok, account} ->
-            {:ok, {_old_token, _old_claims}, {new_token, _new_claims}} = Guardian.refresh(old_token, [])
-            conn |> Plug.Conn.put_session(:account_id, account.id) |> put_status(:ok) |> render(:account_token, %{account: account, token: new_token})
-          {:error, _reason} ->
-            raise Notfound
-        end
-      {:error, _reason} ->
-        raise Notfound
-    end
+    current_token = Guardian.get_token(conn)
+    {:ok, account, new_token} = Guardian.authenticate(current_token)
+    conn |> Plug.Conn.put_session(:account_id, account.id) |> put_status(:ok) |> render(:account_token, %{account: account, token: new_token})
   end
 
   def sign_out(conn, %{}) do

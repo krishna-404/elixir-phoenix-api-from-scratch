@@ -27,10 +27,18 @@ defmodule RealDealApiWeb.Auth.Guardian do
       nil -> {:error, :unauthorised}
       account ->
         case verify_password(password, account.hashed_password) do
-          true -> create_token(account)
+          true -> create_token(account, :access)
           false -> {:error, :unauthorised}
         end
     end
+  end
+
+  def authenticate(token) do
+    with {:ok, claims} <- decode_and_verify(token),
+      {:ok, account} <- resource_from_claims(claims),
+      {:ok, _old, {new_token, _new_claims}} <- refresh(token) do
+        {:ok, account, new_token}
+      end
   end
 
   defp verify_password(password, hashed_password) do
@@ -41,9 +49,17 @@ defmodule RealDealApiWeb.Auth.Guardian do
     Guardian.Plug.current_token(conn)
   end
 
-  defp create_token(account) do
-    {:ok, token, _claims} = encode_and_sign(account)
+  defp create_token(account, type) do
+    {:ok, token, _claims} = encode_and_sign(account, %{}, token_options(type))
     {:ok, account, token}
+  end
+
+  defp token_options(type) do
+    case type do
+      :access -> [token_type: "access", ttl: {1, :hour}]
+      :reset -> [token_type: "reset", ttl: {1, :minute}]
+      :admin -> [token_type: "admin", ttl: {90, :day}]
+    end
   end
 
   def after_encode_and_sign(resource, claims, token, _options) do

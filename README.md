@@ -5,6 +5,8 @@ Same in blog format: [Elixir API: Password Authentication Blog](https://medium.c
 
 Also taking inspiration from [Elixir API from scratch](https://intercaetera.com/posts/elixir-api-from-scratch/)
 
+For tests following this tutorial: [Elixir API: Testing](https://www.youtube.com/watch?v=RZLuB4vGPJI&list=PL2Rv8vpZJz4xGWPUWVfSTciCvmk8ot_zs)
+
 ## CLI commands
 
 ### Create a new Phoenix API project:

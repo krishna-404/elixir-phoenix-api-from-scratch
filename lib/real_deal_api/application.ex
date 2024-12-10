@@ -12,6 +12,7 @@ defmodule RealDealApi.Application do
       RealDealApi.Repo,
       {DNSCluster, query: Application.get_env(:real_deal_api, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: RealDealApi.PubSub},
+      {Guardian.DB.Sweeper, [interval: 60]},
       # Start a worker by calling: RealDealApi.Worker.start_link(arg)
       # {RealDealApi.Worker, arg},
       # Start to serve requests, typically the last entry

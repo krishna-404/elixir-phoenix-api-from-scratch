@@ -25,3 +25,12 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :real_deal_api, :sql_sandbox, true
+
+config :guardian, Guardian.DB,
+  repo: RealDealApi.Repo,
+  schema_name: "guardian_tokens",
+  sweep_interval: :timer.hours(24), # Longer interval for tests
+  # token_types: ["access", "refresh"],
+  sweep_enabled: false  # Disable sweeper in test environment

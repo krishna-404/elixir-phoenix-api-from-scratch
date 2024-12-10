@@ -13,5 +13,7 @@ defmodule RealDealApi.Repo.Migrations.CreateGuardianDBTokensTable do
       add(:claims, :map)
       timestamps()
     end
+
+    create index(:guardian_tokens, [:jti, :aud])
   end
 end

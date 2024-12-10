@@ -94,6 +94,13 @@ mix phx.gen.json Users User users account_id:references:accounts full_name:strin
 mix ecto.migrate
 ```
 
+### Run Guardian migrations:
+
+```
+mix guardian.db.gen.migration
+mix ecto.migrate
+```
+
 ---
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 

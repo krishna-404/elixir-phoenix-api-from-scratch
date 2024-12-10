@@ -35,6 +35,12 @@ config :real_deal_api, RealDealApiWeb.Auth.Guardian,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :guardian_db, Guardian.DB,
+  repo: RealDealApi.Repo,
+  schema_name: "guardian_tokens"
+  # sweep_interval: 60 * 24 * 30 # 30 days # Default is 28 days
+  # token_types: [access: "access", refresh: "refresh"]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

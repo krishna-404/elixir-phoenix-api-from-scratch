@@ -61,3 +61,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# ... existing config ...
+config :guardian, Guardian.DB,
+  issuer: "real_deal_api",
+  secret_key: "Secret key. You can use `mix guardian.gen.secret` to get one"

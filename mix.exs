@@ -37,6 +37,7 @@ defmodule RealDealApi.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:ecto_sql, "~> 3.10"},
       {:guardian, "~> 2.3"},
+      {:guardian_db, "~> 3.0"},
       {:jason, "~> 1.2"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:phoenix, "~> 1.7.14"},

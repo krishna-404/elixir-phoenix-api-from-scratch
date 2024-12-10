@@ -37,8 +37,30 @@ defmodule RealDealApiWeb.Auth.Guardian do
     Bcrypt.verify_pass(password, hashed_password)
   end
 
+  def get_token(conn) do
+    Guardian.Plug.current_token(conn)
+  end
+
   defp create_token(account) do
     {:ok, token, _claims} = encode_and_sign(account)
     {:ok, account, token}
+  end
+
+  def after_encode_and_sign(resource, claims, token, _options) do
+    with {:ok, _} <- Guardian.DB.after_encode_and_sign(resource, claims["typ"], claims, token) do
+      {:ok, token}
+    end
+  end
+
+  def on_verify(claims, token, _options) do
+    with {:ok, _} <- Guardian.DB.on_verify(claims, token) do
+      {:ok, claims}
+    end
+  end
+
+  def on_revoke(claims, token, _options) do
+    with {:ok, _} <- Guardian.DB.on_revoke(claims, token) do
+      {:ok, claims}
+    end
   end
 end

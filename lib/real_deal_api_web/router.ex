@@ -32,5 +32,7 @@ defmodule RealDealApiWeb.Router do
     pipe_through [:api, :auth]
 
     get "/accounts/by_id/:id", AccountController, :show
+    post "/accounts/update", AccountController, :update
+    delete "/accounts/delete", AccountController, :delete
   end
 end

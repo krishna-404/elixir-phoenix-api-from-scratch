@@ -1,5 +1,6 @@
 defmodule RealDealApiWeb.AccountJSON do
   alias RealDealApi.Accounts.Account
+  alias RealDealApiWeb.UserJSON
 
   def index(%{accounts: accounts}) do
     accounts |> Enum.map(&data/1)
@@ -15,6 +16,16 @@ defmodule RealDealApiWeb.AccountJSON do
       email: account.email,
       inserted_at: account.inserted_at,
       updated_at: account.updated_at
+    }
+  end
+
+  def full_account(%{account: account}) do
+    %{
+      id: account.id,
+      email: account.email,
+      inserted_at: account.inserted_at,
+      updated_at: account.updated_at,
+      user: UserJSON.show(%{user: account.user})
     }
   end
 

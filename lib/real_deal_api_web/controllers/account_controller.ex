@@ -2,7 +2,7 @@ defmodule RealDealApiWeb.AccountController do
   use RealDealApiWeb, :controller
 
   alias RealDealApi.{Accounts, Accounts.Account, Users, Users.User}
-  alias RealDealApiWeb.Auth.{ErrorResponse.Forbidden, ErrorResponse.Notfound, ErrorResponse.Unauthorised, Guardian}
+  alias RealDealApiWeb.Auth.{ErrorResponse.Forbidden, ErrorResponse.Unauthorised, Guardian}
 
   plug :is_authorised_account when action in [:show, :update, :delete]
 
@@ -10,7 +10,7 @@ defmodule RealDealApiWeb.AccountController do
 
   defp is_authorised_account(conn, _opts) do
     %{params: %{"account" => params}} = conn
-    account = Accounts.get_account!(params["id"])
+    account = Accounts.get_full_account!(params["id"])
     if conn.assigns[:account].id == account.id, do: conn, else: raise Forbidden
   end
 

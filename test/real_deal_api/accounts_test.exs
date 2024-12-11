@@ -27,5 +27,10 @@ defmodule RealDealApi.AccountsTest do
 
       assert account_from_db.inserted_at == account_from_db.updated_at
     end
+
+    test "error: returns an error when params are missing" do
+      missing_params = %{}
+      assert {:error, %Changeset{valid?: false}} = Accounts.create_account(missing_params)
+    end
   end
 end

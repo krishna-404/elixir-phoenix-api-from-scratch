@@ -19,6 +19,7 @@ defmodule RealDealApi.Support.DataCase do
   using do
     quote do
       alias RealDealApi.{Repo, Support.Factory}
+      alias Ecto.Changeset
 
       import Ecto
       import Ecto.Changeset

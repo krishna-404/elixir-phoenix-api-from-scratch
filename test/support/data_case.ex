@@ -1,4 +1,4 @@
-defmodule RealDealApi.DataCase do
+defmodule RealDealApi.Support.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule RealDealApi.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use RealDealApi.DataCase, async: true`, although
+  by setting `use RealDealApi.SupportDataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -18,17 +18,18 @@ defmodule RealDealApi.DataCase do
 
   using do
     quote do
-      alias RealDealApi.Repo
+      alias RealDealApi.{Repo, Support.Factory}
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import RealDealApi.DataCase
+      import RealDealApi.Support.DataCase
     end
   end
 
   setup tags do
-    RealDealApi.DataCase.setup_sandbox(tags)
+    Ecto.Adapters.SQL.Sandbox.mode(RealDealApi.Repo, :manual)
+    RealDealApi.Support.DataCase.setup_sandbox(tags)
     :ok
   end
 

@@ -1,5 +1,5 @@
 defmodule RealDealApi.Schema.AccountTest do
-  use RealDealApi.DataCase
+  use RealDealApi.Support.DataCase
   use RealDealApi.Support.SchemaCase
   alias RealDealApi.Accounts.Account
   alias Ecto.Changeset

@@ -36,6 +36,7 @@ defmodule RealDealApi.MixProject do
       {:bcrypt_elixir, "~> 3.0"},
       {:dns_cluster, "~> 0.1.1"},
       {:ecto_sql, "~> 3.10"},
+      {:ex_machina, "~> 2.8.0", only: [:test], runtime: false},
       {:faker, "~> 0.18", only: [:test], runtime: false},
       {:guardian, "~> 2.3"},
       {:guardian_db, "~> 3.0"},

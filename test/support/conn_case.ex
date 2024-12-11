@@ -32,7 +32,7 @@ defmodule RealDealApiWeb.ConnCase do
   end
 
   setup tags do
-    RealDealApi.DataCase.setup_sandbox(tags)
+    RealDealApi.Support.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

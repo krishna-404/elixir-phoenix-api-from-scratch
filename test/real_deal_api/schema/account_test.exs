@@ -64,7 +64,7 @@ defmodule RealDealApi.Schema.AccountTest do
       # This allows to start database in an empty state.
       # Ecto.Adapters.SQL.Sandbox.checkout(RealDealApi.Repo)
 
-      {:ok, existing_account} =
+      {:ok, _} =
         %Account{}
         |> Account.changeset(%{email: "test@test.com", hashed_password: "password"})
         |> RealDealApi.Repo.insert()

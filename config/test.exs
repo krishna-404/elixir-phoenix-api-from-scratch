@@ -11,7 +11,8 @@ config :real_deal_api, RealDealApi.Repo,
   hostname: "localhost",
   database: "real_deal_api_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: System.schedulers_online() * 2
+  pool_size: System.schedulers_online() * 2,
+  ownership_timeout: :infinity
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
@@ -28,9 +29,19 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :real_deal_api, :sql_sandbox, true
 
-config :guardian, Guardian.DB,
+config :guardian, RealDealApi.Guardian,
+  issuer: "real_deal_api",
+  secret_key: "HNinpKh9Ne3tr8BpjCpAEh0xzCqTIG3PWsfkR2AtzvUaRIpbs6oIQ9RcmZOuFP/P",
+  token_ttl: %{
+    "access" => {1, :day},
+    "refresh" => {30, :days}
+  },
+  token_verify_module: Guardian.Token.Jwt.Verify,
+  allowed_drift: 2000,
+  verify_issuer: true
+
+config :guardian_db, Guardian.DB,
   repo: RealDealApi.Repo,
   schema_name: "guardian_tokens",
-  sweep_interval: :timer.hours(24), # Longer interval for tests
-  # token_types: ["access", "refresh"],
-  sweep_enabled: false  # Disable sweeper in test environment
+  sweep_interval: :timer.minutes(1),  # Shorter interval for tests
+  sweep_enabled: true

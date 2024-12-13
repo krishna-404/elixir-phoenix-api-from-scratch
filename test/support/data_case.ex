@@ -29,17 +29,16 @@ defmodule RealDealApi.Support.DataCase do
   end
 
   setup tags do
-    Ecto.Adapters.SQL.Sandbox.mode(RealDealApi.Repo, :manual)
-    RealDealApi.Support.DataCase.setup_sandbox(tags)
-    :ok
-  end
-
-  @doc """
-  Sets up the sandbox based on the test tags.
-  """
-  def setup_sandbox(tags) do
     pid = Ecto.Adapters.SQL.Sandbox.start_owner!(RealDealApi.Repo, shared: not tags[:async])
+
+    # Allow the Guardian.DB.Sweeper to access the database using self() instead of pid
+    case Process.whereis(Guardian.DB.Sweeper) do
+      nil -> :ok
+      sweeper_pid -> Ecto.Adapters.SQL.Sandbox.allow(RealDealApi.Repo, self(), sweeper_pid)
+    end
+
     on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    :ok
   end
 
   @doc """
